@@ -92,21 +92,32 @@
 					String userid = (String)session.getAttribute("userid");
 					if(userid != null){%>
 						<li>
-							profileName : <input type='textarea' name='profileName'><br/>
-							helpfulness : <input type='helpfulness' name='helpfulness' placeholder="ex) 5/8"><br/>
-							score : 
-							<select name='score'>
-								<option value='0'>0</option>
-								<option value='1'>1</option>
-								<option value='2'>2</option>
-								<option value='3'>3</option>
-								<option value='4'>4</option>
-								<option value='5'>5</option>
-							</select><br/>
-							summary : <input type='textarea' name='summary'><br/>
-							txt : <input type='textarea' name='txt'>
-							<INPUT TYPE="hidden" name="hiddenvalue" value=<%=code%>>
-							<input type='submit' value='제출'/>
+							<table border='1'>
+							<tr>
+								<td>profileName : </td><td><input type='textarea' name='profileName'></td>
+							</tr>
+							<tr>
+								<td>helpfulness : </td><td><input type='helpfulness' name='helpfulness' placeholder="ex) 5/8"></td>
+							</tr>
+							<tr>
+								<td>score : </td><td><select name='score'>
+														<option value='0'>0</option>
+														<option value='1'>1</option>
+														<option value='2'>2</option>
+														<option value='3'>3</option>
+														<option value='4'>4</option>
+														<option value='5'>5</option>
+													</select></td>
+							</tr>
+							<tr>
+								<td>summary : </td><td><input type='textarea' name='summary'></td>
+							</tr>
+							<tr>
+								<td>txt : </td><td><input type='textarea' name='txt'></td>
+							</tr>
+								<INPUT TYPE="hidden" name="hiddenvalue" value=<%=code%>>
+								<input type='submit' value='제출'/>
+							</table>
 						</li>
 				<%}%>
 			</form>

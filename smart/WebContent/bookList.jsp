@@ -19,75 +19,73 @@ session.setAttribute("email", email);
 </head>
 <body>
 	<h2>FOOD</h2>
-<%if(userid != null && !userid.equals("")){ %>
-	<h3><%=userid %>회원님 환영합니다.
-		<input type="button" value="로그아웃" onclick="location.href='sessionLogout.jsp'"/>
-		<input type="button" value="회원정보수정" onclick="location.href='userInfoMgmt.jsp'"/>
-		<input type="button" value="리뷰제품확인" onclick="location.href='userReview.jsp'"/>
-		<%
-			if("admin".equals(userid)){%>
-				<input type="button" value="회원관리" onclick="location.href='listUsers.jsp'"/>
-			<%}
-		%>
-		
-<%}else{%>
-	<h3>
-		<input type="button" value="로그인" onclick="location.href='sessionLoginForm.html'"/>
-		<input type="button" value="회원가입" onclick="location.href='signUpForm.html'"/>
-	</h3>
-<%}%>
-	<h4><a href="bookForm.jsp">새 책 등록</a></h4>
+	<%if(userid != null && !userid.equals("")){ %>
+		<h3><%=userid %>회원님 환영합니다.
+			<input type="button" value="로그아웃" onclick="location.href='sessionLogout.jsp'"/>
+			<input type="button" value="회원정보수정" onclick="location.href='userInfoMgmt.jsp'"/>
+			<input type="button" value="리뷰제품확인" onclick="location.href='userReview.jsp'"/>
+			<%
+				if("admin".equals(userid)){%>
+					<input type="button" value="회원관리" onclick="location.href='listUsers.jsp'"/>
+					<input type="button" value="새 책 등록" onclick="location.href='bookForm.jsp'"/>
+				<%}
+			%>
+		</h3>
+			
+	<%}else{%>
+		<h3>
+			<input type="button" value="로그인" onclick="location.href='sessionLoginForm.html'"/>
+			<input type="button" value="회원가입" onclick="location.href='signUpForm.html'"/>
+		</h3>
+	<%}%>
 	
-	<table border=1>
 	<form action = "bookList.jsp" method="post">
 	<ul>
 		<li><b>검색 </b><input type="text" name="search"></li>
 
-		<tr>
-			<th>productId</th><th>name</th><th>price</th>
-		</tr>
-		<%
-				request.setCharacterEncoding("EUC-KR");
-				String menu = request.getParameter("menu");
-				String search = request.getParameter("search");
-				String query = "";
-
-				Connection con = null;
-				try{
-					String dbURL = "jdbc:mysql://localhost:3306/food";
-					String dbUser = "food";
-					String dbPass = "ghwns233";
-					
-					Class.forName("com.mysql.jdbc.Driver");
-					con = DriverManager.getConnection(dbURL, dbUser, dbPass);
-					Statement stmt = con.createStatement();
-					query = "Select * from product";
-					
-					String cond = "";
-					if(search != null && !search.equals("")){
-						 cond= " where productId like '%"+search+"%' or name like '%"+search+"%'";
-					}
-
-					ResultSet rs= stmt.executeQuery(query+cond);
-					while(rs.next()){
-		%>
-						<tr>
-							<td><%=rs.getString(1)%></td>
-							<td><a href="bookInfo.jsp?code=<%=rs.getString(1)%>"><%=rs.getString(2)%></a></td>
-							<td><%=rs.getString(3)%></td>
-							<%if("admin".equals(userid)){%>
-								<td>
-									<a href="updateBookForm.jsp?code=<%=rs.getString(1)%>">수정</a>/<a href="deleteBook?code=<%=rs.getString(1)%>">삭제</a>
-	                        	</td>
-							<%}%>
-						</tr>
-		<%			}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-		%>
+		<table style="margin:auto; width:40%; text-align:center" border="1px">
+			<tr>
+				<th>productId</th><th>name</th><th>price</th>
+			</tr>
+			<%		request.setCharacterEncoding("EUC-KR");
+					String menu = request.getParameter("menu");
+					String search = request.getParameter("search");
+					String query = "";
+	
+					Connection con = null;
+					try{
+						String dbURL = "jdbc:mysql://localhost:3306/food";
+						String dbUser = "food";
+						String dbPass = "ghwns233";
+						
+						Class.forName("com.mysql.jdbc.Driver");
+						con = DriverManager.getConnection(dbURL, dbUser, dbPass);
+						Statement stmt = con.createStatement();
+						query = "Select * from product";
+						
+						String cond = "";
+						if(search != null && !search.equals("")){
+							 cond= " where productId like '%"+search+"%' or name like '%"+search+"%'";
+						}
+	
+						ResultSet rs= stmt.executeQuery(query+cond);
+						while(rs.next()){%>
+							<tr>
+								<td><%=rs.getString(1)%></td>
+								<td><a href="bookInfo.jsp?code=<%=rs.getString(1)%>"><%=rs.getString(2)%></a></td>
+								<td><%=rs.getString(3)%></td>
+								<%if("admin".equals(userid)){%>
+									<td>
+										<a href="updateBookForm.jsp?code=<%=rs.getString(1)%>">수정</a>/<a href="deleteBook?code=<%=rs.getString(1)%>">삭제</a>
+		                        	</td>
+								<%}%>
+							</tr>
+			<%			}
+					}catch(Exception e){
+						e.printStackTrace();
+					}%>
+		</table>
 	</ul>
 	</form>
-	</table>
 </body>
 </html>

@@ -17,7 +17,7 @@
 				String name = "";
 				String price = "";
 				String query = "";
-				//ArrayList<String> genres = new ArrayList<String>();
+				
 				Connection con = null;
 				try{
 					String dbURL = "jdbc:mysql://localhost:3306/food";
