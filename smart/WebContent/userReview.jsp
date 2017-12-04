@@ -1,62 +1,58 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="US-ASCII"%>
-<%@ page import = "java.util.*, JW0036.*"%>
-<%
-String userid= (String) session.getAttribute("userid");
-%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@ page import="java.sql.*, java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>List of Users</title>
-<script>
-	function userModify(username){
-		document.getElementById("username1").value= username;
-		document.userModify.submit();
-	}
-
-	function userDelete(username){
-		document.getElementById("username2").value= username;
-		document.userDelete.submit();
-	}
-</script>
-<body>
-<%
-if(userid.equals("admin")){
-%>
-<form name="modify" method="post">
-<table id="list">
-	<tr>
-		<th>Username</th>
-		<th>Email</th>
-		<th>lastLogin</th>
-		<th></th>
-	</tr>
-<%
-	ArrayList<User> users = userDB.showUsers();
-	for(User u: users){
-%>
-<tr>
-	<td width="20%"><%=u.getUserid()%></td>
-	<td width="20%"><%=u.getEmail()%></td>
-	<td width="20%"><%=u.getLastLogin()%></td>
-	<td width="20%">
-		<a href="javascript:userModify('<%=u.getUserid()%>');">[modify]</a>
-		<a href="javascript:userDelete('<%=u.getUserid()%>');">[delete]</a>
-	</td>
-</tr>
-<%
-	}
-%>
-</table>
-</form>
-<form name="userModify" method="post" action="userInfoMgmt_admin.jsp">
-<input type="hidden" name="userid" id="username1">
-</form>
-<form name="userDelete" method="post" action="userController">
-<input type="hidden" name="userid" id="username2">
-<input type="hidden" name="actionType" value="delete">
-</form>
-<%} %>
-</body>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+		<title>내가 리뷰한 제품</title>
+	</head>
+	
+	<body>
+		<h2>FOOD INFO</h2>
+		<form action="updateBook" method="post">
+			 <ul>
+				<li>
+					<table border=1>
+						<tr><th>productId</th><th>txt</th></tr>
+	
+						<%
+							request.setCharacterEncoding("EUC-KR");
+							
+							try{
+								String dbURL = "jdbc:mysql://localhost:3306/food";
+								String dbUser = "food";
+								String dbPass = "ghwns233";
+								String userid = (String)session.getAttribute("userid");
+								
+								Class.forName("com.mysql.jdbc.Driver");
+								Connection con = DriverManager.getConnection(dbURL, dbUser, dbPass);
+								
+								String query = "select productId, txt from review where userid=?";
+								PreparedStatement pstmt = con.prepareStatement(query);
+								pstmt.setString(1, userid);
+								//pstmt.setString(2, redirected_code);
+								ResultSet rs= pstmt.executeQuery();
+								
+								while(rs.next()){%>
+									<tr>
+										<td><%=rs.getString(1)%></td>
+										<td><%=rs.getString(2)%></td>
+									</tr>
+					<%			}
+		
+								con.close();
+								pstmt.close();
+								rs.close();
+							}catch(Exception e){
+								e.printStackTrace();
+							}
+					%>
+					</table>
+					</li>
+					</ul>
+			</form>
+	
+			
+	</body>
 </html>

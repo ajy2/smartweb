@@ -51,6 +51,7 @@ public class insertReview extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbURL, dbUser, dbPass);
 			String productId = request.getParameter("hiddenvalue");
+			String userid=request.getParameter("userid");
 			String profileName = request.getParameter("profileName");
 			String helpfulness = request.getParameter("helpfulness");
 			String score = request.getParameter("score");
@@ -58,21 +59,22 @@ public class insertReview extends HttpServlet {
 			String summary = request.getParameter("summary");
 			String txt = request.getParameter("txt");
 			
-			query = "insert into review(productId, userid, profileName, helpfulness, score, time, summary, txt) values(?, '', ?, ?, ?, NOW(), ?, ?)";
+			query = "insert into review(productId, userid, profileName, helpfulness, score, time, summary, txt) values(?, ?, ?, ?, ?, NOW(), ?, ?)";
 			
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, productId);
-			stmt.setString(2, profileName);
-			stmt.setString(3, helpfulness);
-			stmt.setFloat(4, float_score);
-			stmt.setString(5, summary);
-			stmt.setString(6, txt);
+			stmt.setString(2, userid);
+			stmt.setString(3, profileName);
+			stmt.setString(4, helpfulness);
+			stmt.setFloat(5, float_score);
+			stmt.setString(6, summary);
+			stmt.setString(7, txt);
 			
 			int resultCnt = stmt.executeUpdate();
 
 			if(resultCnt > 0) {
 				request.setAttribute("code", productId);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("bookInfo.jsp?");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("foodInfo.jsp");
 				dispatcher.forward(request, response);
 			}
 			con.close();

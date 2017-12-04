@@ -27,7 +27,7 @@ session.setAttribute("email", email);
 			<%
 				if("admin".equals(userid)){%>
 					<input type="button" value="회원관리" onclick="location.href='listUsers.jsp'"/>
-					<input type="button" value="새 책 등록" onclick="location.href='bookForm.jsp'"/>
+					<input type="button" value="새 품목 등록" onclick="location.href='foodInsertForm.jsp'"/>
 				<%}
 			%>
 		</h3>
@@ -72,7 +72,7 @@ session.setAttribute("email", email);
 						while(rs.next()){%>
 							<tr>
 								<td><%=rs.getString(1)%></td>
-								<td><a href="bookInfo.jsp?code=<%=rs.getString(1)%>"><%=rs.getString(2)%></a></td>
+								<td><a href="foodInfo.jsp?code=<%=rs.getString(1)%>"><%=rs.getString(2)%></a></td>
 								<td><%=rs.getString(3)%></td>
 								<%if("admin".equals(userid)){%>
 									<td>

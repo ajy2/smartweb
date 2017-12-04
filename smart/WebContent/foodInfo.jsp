@@ -14,7 +14,10 @@
 			 <ul>
 				<%
 					String code = request.getParameter("code");
-					String redirected_code=(String)request.getAttribute("code");				
+					String redirected_code=(String)request.getAttribute("code");
+						if(code==null){
+							code = redirected_code;
+						}
 					String name ="";
 					String price="";
 					String query = "";
@@ -116,6 +119,7 @@
 								<td>txt : </td><td><input type='textarea' name='txt'></td>
 							</tr>
 								<INPUT TYPE="hidden" name="hiddenvalue" value=<%=code%>>
+								<INPUT TYPE="hidden" name="userid" value=<%=userid%>>
 								<input type='submit' value='Á¦Ãâ'/>
 							</table>
 						</li>
