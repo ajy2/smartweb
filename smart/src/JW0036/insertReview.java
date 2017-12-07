@@ -1,6 +1,7 @@
 package JW0036;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,47 +44,53 @@ public class insertReview extends HttpServlet {
 		
 		String query = "";
 		Connection con = null;
-		try{
-			String dbURL = "jdbc:mysql://localhost:3306/food";
-			String dbUser = "food";
-			String dbPass = "ghwns233";
-			
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(dbURL, dbUser, dbPass);
-			String productId = request.getParameter("hiddenvalue");
-			String userid=request.getParameter("userid");
-			String profileName = request.getParameter("profileName");
-			String helpfulness = request.getParameter("helpfulness");
-			String score = request.getParameter("score");
-			float float_score=Float.parseFloat(score);
-			String summary = request.getParameter("summary");
-			String txt = request.getParameter("txt");
-			
-			query = "insert into review(productId, userid, profileName, helpfulness, score, time, summary, txt) values(?, ?, ?, ?, ?, NOW(), ?, ?)";
-			
-			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setString(1, productId);
-			stmt.setString(2, userid);
-			stmt.setString(3, profileName);
-			stmt.setString(4, helpfulness);
-			stmt.setFloat(5, float_score);
-			stmt.setString(6, summary);
-			stmt.setString(7, txt);
-			
-			int resultCnt = stmt.executeUpdate();
-
-			if(resultCnt > 0) {
-				request.setAttribute("code", productId);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("foodInfo.jsp");
-				dispatcher.forward(request, response);
+		String productId = request.getParameter("productId");
+		String dbURL = "jdbc:mysql://localhost:3306/food";
+		String dbUser = "food";
+		String dbPass = "ghwns233";
+		String userid=request.getParameter("userid");
+		float score = Float.parseFloat(request.getParameter("score"));
+		String summary = request.getParameter("summary");
+		String txt = request.getParameter("txt");
+		String duplicateCheckFlag = request.getParameter("duplicateCheckFlag");
+		
+		if(!"1".equals(duplicateCheckFlag)) {
+			try{
+				Class.forName("com.mysql.jdbc.Driver");
+				con = DriverManager.getConnection(dbURL, dbUser, dbPass);
+				
+					query = "insert into review(productId, userid, profileName, score, time, summary, txt) values(?, ?, '', ?, NOW(), ?, ?)";
+					
+					PreparedStatement stmt = con.prepareStatement(query);
+					stmt.setString(1, productId);
+					stmt.setString(2, userid);
+					stmt.setFloat(3, score);
+					stmt.setString(4, summary);
+					stmt.setString(5, txt);
+					
+					int resultCnt = stmt.executeUpdate();
+		
+					if(resultCnt > 0) {
+						request.setAttribute("code", productId);
+						RequestDispatcher dispatcher = request.getRequestDispatcher("foodInfo.jsp");
+						dispatcher.forward(request, response);
+					}
+					con.close();
+					stmt.close();
+				
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-			con.close();
-			stmt.close();
-			
-		}catch(Exception e){
-			e.printStackTrace();
+		}
+		else {
+			PrintWriter out=response.getWriter();
+			out.println("<script>alert('∞Ê∞Ì√¢!');</script>");
+			request.setAttribute("code", productId);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("foodInfo.jsp");
+			dispatcher.forward(request, response);
+			out.flush();
+			out.close();
 		}
 	}
-
 }
 

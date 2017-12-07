@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>INPUT NEW FOOD DATA.</h2>
+	<h2>INPUT NEW FOOD DATA</h2>
 	<form action="bookInsert" method="post">
 		 <ul>
 		 	<li><b>PRODUCTID: </b><input type="text" name="productId"></li>

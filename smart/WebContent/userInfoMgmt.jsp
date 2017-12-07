@@ -17,6 +17,7 @@ userid = (String)session.getAttribute("userid");
 <%if(userid != null && !userid.equals("")){ 
 	user = userDB.showAUser(userid);
 %>
+	<input type="button" value="홈으로 이동" onclick="location.href='bookList.jsp'"/>
 	<h2><%=userid %>회원님 환영합니다.</h2><a href="sessionLogout.jsp">로그아웃</a>
 	<h3>회원님의 상세정보는 다음과 같습니다.<a href="deleteUserConfirm.jsp">[회원탈퇴]</a></h3>
 	</table>

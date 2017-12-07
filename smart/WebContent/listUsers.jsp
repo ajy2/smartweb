@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="US-ASCII"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <%@ page import = "java.util.*, JW0036.*"%>
 <%
 String userid= (String) session.getAttribute("userid");
@@ -21,6 +21,7 @@ String userid= (String) session.getAttribute("userid");
 	}
 </script>
 <body>
+<input type="button" value="홈으로 이동" onclick="location.href='bookList.jsp'"/>
 <%
 if(userid.equals("admin")){
 %>
