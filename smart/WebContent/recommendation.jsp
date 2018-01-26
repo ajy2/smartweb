@@ -10,7 +10,7 @@
 
 	<body>
 		<h2>RECOMMENDATION<h2>
-		<form action="updateBook" method="post">
+		<form action="updateFood" method="post">
 			 <ul>
 				<%
 					request.setCharacterEncoding("EUC-KR");
@@ -30,6 +30,8 @@
 					float count3 = 0;
 					float sum3 = 0;
 					float max = 0;
+					float max2 = 0;
+					float max3 = 0;
 
 				%>
 	
@@ -112,24 +114,97 @@
 			</form>
 			<%
 				if(max == average1){
-			%>  <h3>RECOMMENDATION _MENU</h3> 
+			%>  <h3>RECOMMENDATION _MENU_1</h3> 
 				<li><b>한식 : </b><input type="text" name="average1" value="<%=average1%>" readonly></li>
 				<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review1" value="<%=count1%>" readonly></li>
 			<%
-				}
+				if (average2 > average3) {
+	            	max2 = average2;
+	            	max3 = average3;
+	            	%>
+	            	<h3>RECOMMENDATION _MENU_2</h3> 
+					<li><b>일식 : </b><input type="text" name="average2" value="<%=average2%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review2" value="<%=count2%>" readonly></li>
+					<h3>RECOMMENDATION _MENU_3</h3> 
+					<li><b>중식 : </b><input type="text" name="average3" value="<%=average3%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review3" value="<%=count3%>" readonly></li>
+					<%
+	        	} 
+	       	 	 else {
+	            	max2 = average3;
+	            	max3 = average2;
+	            	%>
+	            	<h3>RECOMMENDATION _MENU_2</h3> 
+					<li><b>중식 : </b><input type="text" name="average3" value="<%=average3%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review3" value="<%=count3%>" readonly></li>
+					<h3>RECOMMENDATION _MENU_3</h3> 
+					<li><b>일식 : </b><input type="text" name="average2" value="<%=average2%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review2" value="<%=count2%>" readonly></li>
+					<%
+	        	}
 			
+			}  
 				else if(max == average2){
-			%>	<h3>RECOMMENDATION _MENU</h3> 
+			%>	<h3>RECOMMENDATION _MENU_1</h3> 
 				<li><b>일식 : </b><input type="text" name="average2" value="<%=average2%>" readonly></li>
 			    <li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review2" value="<%=count2%>" readonly></li>
-			<%	
-				}
+			<%
+				if (average1 > average3) {
+            		max2 = average1;
+            		max3 = average3;
+            		%>
+            		<h3>RECOMMENDATION _MENU_2</h3> 
+					<li><b>한식 : </b><input type="text" name="average1" value="<%=average1%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review1" value="<%=count2%>" readonly></li>
+					<h3>RECOMMENDATION _MENU_3</h3> 
+					<li><b>중식 : </b><input type="text" name="average3" value="<%=average3%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review3" value="<%=count3%>" readonly></li>
+					<%
+        		} 
+       	 	 	else {
+            		max2 = average3;
+            		max3 = average1;
+            		%>
+            		<h3>RECOMMENDATION _MENU_2</h3> 
+					<li><b>중식 : </b><input type="text" name="average3" value="<%=average3%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review2" value="<%=count3%>" readonly></li>
+					<h3>RECOMMENDATION _MENU_3</h3> 
+					<li><b>한식 : </b><input type="text" name="average1" value="<%=average1%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review1" value="<%=count1%>" readonly></li>
+					<%
+        		}
+			}
 		
 				else if(max == average3){
-			%>	<h3>RECOMMENDATION _MENU</h3> 
+			%>	<h3>RECOMMENDATION _MENU_1</h3> 
 				<li><b>중식 : </b><input type="text" name="average3" value="<%=average3%>" readonly></li>
 				<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review3" value="<%=count3%>" readonly></li>
-			<%	}
+			<%
+				if (average1 > average2) {
+            		max2 = average1;
+            		max3 = average2;
+            		%>
+            		<h3>RECOMMENDATION _MENU_2</h3> 
+					<li><b>한식 : </b><input type="text" name="average1" value="<%=average1%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review1" value="<%=count1%>" readonly></li>
+					<h3>RECOMMENDATION _MENU_3</h3> 
+					<li><b>일식 : </b><input type="text" name="average3" value="<%=average2%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review2" value="<%=count2%>" readonly></li>
+					<%
+        		} 
+       	 	 	else {
+            		max2 = average2;
+            		max3 = average1;
+            		%>
+            		<h3>RECOMMENDATION _MENU_2</h3> 
+					<li><b>일식 : </b><input type="text" name="average2" value="<%=average2%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review2" value="<%=count2%>" readonly></li>
+					<h3>RECOMMENDATION _MENU_3</h3> 
+					<li><b>한식 : </b><input type="text" name="average1" value="<%=average1%>" readonly></li>
+					<li><b>NUMBER OF REVIEW : </b><input type="text" name="n_review1" value="<%=count1%>" readonly></li>
+					<%
+        		}
+			}
 			
 			%>
 		

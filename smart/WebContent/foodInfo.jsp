@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import="java.sql.*, java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -9,7 +8,7 @@
 	</head>
 
 	<body>
-		<h2>FOOD INFO</h2>	<input type="button" value="홈으로 이동" onclick="location.href='bookList.jsp'"/>
+		<h2>FOOD INFO</h2>	<input type="button" value="홈으로 이동" onclick="location.href='foodList.jsp'"/>
 		<form action="updateReview" method="post">
 			 <ul>
 				<%	request.setCharacterEncoding("EUC-KR");
@@ -21,7 +20,7 @@
 					PreparedStatement pstmt = null;
 					String code = request.getParameter("code");
 					String redirected_code=(String)request.getAttribute("code");
-					
+					int rowCount = 0;
 					if(code==null){
 						code=redirected_code;
 					}
@@ -45,7 +44,7 @@
 						pstmt.setString(1, code);
 						pstmt.setString(2, redirected_code);
 						rs2= pstmt.executeQuery();
-						
+
 						while(rs.next()){
 							name = rs.getString(1);
 							price = rs.getString(2);
@@ -57,8 +56,9 @@
 							count ++;
 						}
 						average = sum/(float)count;
-						rs2.first();
-
+						//rs2.last();
+						//rowCount=rs2.getRow();
+						rs2.beforeFirst();
 					}catch(Exception e){
 						e.printStackTrace();
 					}%>
@@ -74,14 +74,14 @@
 						<tr style="text-align:center"><th>userid</th><th width="50px">score</th><th width="100px">date</th><th>text</th></tr>
 						<%	String userid = (String)session.getAttribute("userid");
 						
-							String duplicateCheckFlag="";
+							//String duplicateCheckFlag="";
 							while(rs2.next()){%>
 								<tr>
 								<%if(rs2.getString(1).equals(userid)){%>
-										<td style="text-align:center"><input type="text" name="userid" value=<%=rs2.getString(1)%> readonly></td>
-										<td style="text-align:center"><input type="text" name="score" value=<%=rs2.getString(2)%>></td>
+										<td style="text-align:center"><input type="text" name="userid" value="<%=rs2.getString(1)%>" readonly></td>
+										<td style="text-align:center"><input type="text" name="score" value="<%=rs2.getString(2)%>"></td>
 										<td style="text-align:center"><%=rs2.getString(3)%></td>
-										<td><input type="text" name="txt" value=<%=rs2.getString(4)%>></td>
+										<td><input type="text" name="txt" value="<%=rs2.getString(4)%>"></td>
 										<input type='hidden' name='productId' value=<%=code%>><input type='hidden' name='fromfoodInfo' value='t'>
 										<td><input type="submit" name="reviewUpdateButton" value="modify"> / <input type="submit" name="reviewUpdateButton" value="delete"></td>
 								<%}else{%>
@@ -93,7 +93,7 @@
 								<%} %>
 						<%String temp=rs2.getString(1);
 							if(temp.equals(userid)){
-								duplicateCheckFlag="1";
+								session.setAttribute("duplicateCheckFlag", "1");
 							}
 						}
 						con.close();
@@ -128,7 +128,7 @@
 								</tr>
 							</table>
 							<input type='hidden' name='productId' value=<%=code%>>
-							<input type='hidden' name='duplicateCheckFlag' value=<%=duplicateCheckFlag%>>
+							<!-- <input type='hidden' name='duplicateCheckFlag' value=> -->
 							<input type='submit' value='제출'>
 				<%}%>
 			</form>

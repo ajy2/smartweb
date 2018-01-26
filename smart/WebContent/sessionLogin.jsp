@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import="java.sql.*, JW0036.*" %>
 <% 
 	String userid = request.getParameter("userid");
@@ -11,7 +10,7 @@
 		int no2 = userDB.checkUserPasswd(userid, passwd);
 		if(no2 > 0){
 			session.setAttribute("userid", userid);
-			response.sendRedirect("bookList.jsp");
+			response.sendRedirect("foodList.jsp");
 		}else{%>
 			<script>
 				alert("비밀번호가 맞지 않습니다.");

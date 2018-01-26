@@ -20,7 +20,7 @@ if("admin".equals(userid)){
 }
 %>
 <%if(user != null){ %>
-	<h2><%=userid %>회원의 정보수정 </h2><input type="button" value="홈으로 이동" onclick="location.href='bookList.jsp'"/>
+	<h2><%=userid %>회원의 정보수정 </h2><input type="button" value="홈으로 이동" onclick="location.href='foodList.jsp'"/>
 	</table>
 		<form action="userController" method="post">
 		<table border=1>

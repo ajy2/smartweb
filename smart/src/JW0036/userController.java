@@ -127,7 +127,7 @@ public class userController extends HttpServlet {
 			int flag = 0;
 			flag = userDB.modifyUser(user);
 			if(flag > 0){
-				url = "bookList.jsp";
+				url = "foodList.jsp";
 			}
 		}else {
 			url = "/smart/userInfoMgmt.jsp";

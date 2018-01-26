@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"pageEncoding="EUC-KR"%>
 <%@ page import="java.sql.*"%>
 <jsp:useBean id="userDB" class="JW0036.userDB"/>
 <jsp:useBean id="user" class="JW0036.User"/>
@@ -25,7 +24,7 @@ if(agree.equals("yes")){
 		%>
 			<script>
 				alert("정상적으로 탈퇴되었습니다");
-				window.location.href="../bookList.jsp";
+				window.location.href="../foodList.jsp";
 			</script>			
 <%		}
 }else{%>

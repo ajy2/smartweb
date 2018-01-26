@@ -8,21 +8,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import java.sql.*;
 
 /**
  * Servlet implementation class foodInsert
  */
-@WebServlet("/updateReview")
-public class updateReview extends HttpServlet {
+@WebServlet("/foodInsert")
+public class foodInsert extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public updateReview() {
+    public foodInsert() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,9 +42,7 @@ public class updateReview extends HttpServlet {
 		response.setContentType("text/html;charset=euc-kr");
 		
 		String query = "";
-		String status = request.getParameter("reviewUpdateButton");
 		Connection con = null;
-		PreparedStatement stmt = null;
 		try{
 			String dbURL = "jdbc:mysql://localhost:3306/food";
 			String dbUser = "food";
@@ -55,40 +51,22 @@ public class updateReview extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbURL, dbUser, dbPass);
 			String productId = request.getParameter("productId");
-			String userid=request.getParameter("userid");
-			String temp=request.getParameter("fromfoodInfo");
-			float score = Float.parseFloat(request.getParameter("score"));
-			String txt = request.getParameter("txt");
-
-			if("modify".equals(status)) {
-				query = "update review set score=?, txt=? where productId=? AND userid=?";
-				stmt = con.prepareStatement(query);
-				stmt.setFloat(1, score);
-				stmt.setString(2, txt);
-				stmt.setString(3, productId);
-				stmt.setString(4, userid);
-			}
-			else {
-				query = "delete from review where productId=? AND userid=?";
-				stmt = con.prepareStatement(query);
-				stmt.setString(1, productId);
-				stmt.setString(2, userid);
-				HttpSession session = request.getSession();
-				session.setAttribute("duplicateCheckFlag", "");
-			}
-
+			String name = request.getParameter("name");
+			String price = request.getParameter("price");
+			
+			query = "insert into product(productId, name, price) values(?, ?, ?)";
+			
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, productId);
+			stmt.setString(2, name);
+			stmt.setString(3, price);
+			
 			int resultCnt = stmt.executeUpdate();
-			RequestDispatcher dispatcher = null;
-			if(resultCnt > 0){
-				request.setAttribute("userid", userid);
-				if("t".equals(temp)) {
-					request.setAttribute("code", productId);
-					dispatcher = request.getRequestDispatcher("foodInfo.jsp");
-				}
-				else {
-					dispatcher = request.getRequestDispatcher("userReview.jsp");
-				}
-				dispatcher.forward(request, response);
+
+			if(resultCnt > 0) {
+				//RequestDispatcher dispatcher = request.getRequestDispatcher("foodList.jsp");
+				//dispatcher.forward(request, response);
+				response.sendRedirect("foodList.jsp");
 			}
 			con.close();
 			stmt.close();

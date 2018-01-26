@@ -9,10 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.sql.*;
 
 /**
- * Servlet implementation class bookInsert
+ * Servlet implementation class foodInsert
  */
 @WebServlet("/insertReview")
 public class insertReview extends HttpServlet {
@@ -52,7 +54,9 @@ public class insertReview extends HttpServlet {
 		float score = Float.parseFloat(request.getParameter("score"));
 		String summary = request.getParameter("summary");
 		String txt = request.getParameter("txt");
-		String duplicateCheckFlag = request.getParameter("duplicateCheckFlag");
+		//String duplicateCheckFlag = request.getParameter("duplicateCheckFlag");
+		HttpSession session = request.getSession();
+		String duplicateCheckFlag=(String)session.getAttribute("duplicateCheckFlag");
 		
 		if(!"1".equals(duplicateCheckFlag)) {
 			try{
@@ -72,6 +76,7 @@ public class insertReview extends HttpServlet {
 		
 					if(resultCnt > 0) {
 						request.setAttribute("code", productId);
+						session.setAttribute("duplicateCheckFlag","1");
 						RequestDispatcher dispatcher = request.getRequestDispatcher("foodInfo.jsp");
 						dispatcher.forward(request, response);
 					}

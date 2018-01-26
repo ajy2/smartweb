@@ -29,5 +29,5 @@ if(agree.equals("yes")){
 	</script>
 <%		return;
 }
-response.sendRedirect("bookList.jsp");
+response.sendRedirect("foodList.jsp");
 %>
